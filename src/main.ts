@@ -1,3 +1,4 @@
+import './styles/game.css';
 import { Game } from './core/Game';
 
 const app = document.querySelector<HTMLDivElement>('#app');
@@ -7,7 +8,7 @@ if (!app) {
 }
 
 const game = new Game(app);
-game.start();
+void game.start();
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
