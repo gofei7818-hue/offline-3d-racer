@@ -14,7 +14,7 @@ import { SaveData } from '../storage/SaveData';
 import { RACE_CONFIG } from '../config/constants';
 
 export class Game {
-  private readonly shell: HTMLDivElement;
+  private readonly shell: HTMLElement;
   private readonly renderer: Renderer;
   private readonly cameraController: CameraController;
   private readonly state = new StateMachine();
@@ -33,7 +33,6 @@ export class Game {
     this.shell = document.createElement('main');
     this.shell.className = 'game-shell';
     host.appendChild(this.shell);
-
     this.renderer = new Renderer(this.shell);
     this.cameraController = new CameraController(this.renderer.camera);
     this.ui = new UIManager(this.shell);
@@ -45,11 +44,13 @@ export class Game {
 
     this.ui.menu.onStart(() => {
       void this.audio.initialize();
-      this.state.transition('racing');
+      this.restartRace();
       this.ui.setMenuVisible(false);
+      this.state.transition('racing');
     });
 
     window.addEventListener('resize', this.handleResize);
+    window.addEventListener('keydown', this.handleHotkeys);
   }
 
   async start(): Promise<void> {
@@ -67,6 +68,7 @@ export class Game {
     this.renderer.dispose();
     this.ui.dispose();
     window.removeEventListener('resize', this.handleResize);
+    window.removeEventListener('keydown', this.handleHotkeys);
     this.shell.remove();
   }
 
@@ -78,12 +80,38 @@ export class Game {
       this.audio.updateEngine(this.car.speed / RACE_CONFIG.maxDevicePixelRatio, input.throttle);
     }
 
-    this.cameraController.update(this.car.position);
-    this.ui.updateHud(this.car.speed * 3.6, 0, elapsedSeconds);
+    this.cameraController.update(this.car.position, this.car.heading, this.car.speed);
+    this.ui.updateHud(this.car.speed * 3.6, this.computeLap(), elapsedSeconds);
     this.renderer.render();
   }
 
-  private readonly handleResize = (): void => {
-    this.renderer.resize();
+  private computeLap(): number {
+    const lap = Math.floor(Math.max(0, (12 - this.car.position.z) / 300)) + 1;
+    return Math.min(3, lap);
+  }
+
+  private restartRace(): void {
+    this.car.reset();
+    this.input.reset();
+    this.loop.reset();
+  }
+
+  private readonly handleResize = (): void => this.renderer.resize();
+
+  private readonly handleHotkeys = (event: KeyboardEvent): void => {
+    if (event.code === 'KeyP') {
+      if (this.state.state === 'racing') {
+        this.state.transition('paused');
+      } else if (this.state.state === 'paused') {
+        this.state.transition('racing');
+      }
+      this.ui.setPaused(this.state.state === 'paused');
+    }
+    if (event.code === 'KeyR') {
+      this.restartRace();
+      this.ui.setPaused(false);
+      this.ui.setMenuVisible(false);
+      this.state.transition('racing');
+    }
   };
 }

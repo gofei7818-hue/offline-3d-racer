@@ -13,13 +13,14 @@ export class Car {
   }
 
   update(deltaSeconds: number): void {
-    this.position.z -= this.speed * deltaSeconds;
+    const forward = new THREE.Vector3(Math.sin(this.heading), 0, -Math.cos(this.heading));
+    this.position.addScaledVector(forward, this.speed * deltaSeconds);
     this.mesh.position.copy(this.position);
     this.mesh.rotation.y = this.heading;
   }
 
   reset(): void {
-    this.position.set(0, 0, 12);
+    this.position.set(0, 0, 22);
     this.speed = 0;
     this.heading = 0;
     this.mesh.position.copy(this.position);
