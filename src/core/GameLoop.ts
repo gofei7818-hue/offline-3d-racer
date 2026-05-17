@@ -20,6 +20,10 @@ export class GameLoop {
     cancelAnimationFrame(this.frameId);
   }
 
+  reset(): void {
+    this.elapsed = 0;
+  }
+
   private readonly tick = (time: number): void => {
     if (!this.running) return;
     const delta = Math.min((time - this.lastTime) / 1000, 0.05);
