@@ -1,15 +1,20 @@
 export class PauseMenu {
   readonly element: HTMLDivElement;
 
-  constructor() {
+  constructor(host: HTMLElement) {
     this.element = document.createElement('div');
     this.element.className = 'screen';
     this.element.style.display = 'none';
     this.element.innerHTML = `
       <section class="card">
-        <h2>暂停</h2>
-        <p>暂停菜单将在后续阶段接入完整比赛流程。</p>
+        <h2>已暂停</h2>
+        <p>按 P 继续，按 R 重新开始。</p>
       </section>
     `;
+    host.appendChild(this.element);
+  }
+
+  setVisible(visible: boolean): void {
+    this.element.style.display = visible ? 'grid' : 'none';
   }
 }
