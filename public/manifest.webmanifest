@@ -1,0 +1,19 @@
+{
+  "name": "Offline 3D Racer",
+  "short_name": "3D Racer",
+  "description": "A local offline PWA 3D racing game built with Vite, TypeScript and Three.js.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "landscape",
+  "background_color": "#070b14",
+  "theme_color": "#0b1020",
+  "icons": [
+    {
+      "src": "/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
