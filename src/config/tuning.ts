@@ -1,9 +1,13 @@
 export const PHYSICS_TUNING = {
-  maxSpeed: 42,
-  acceleration: 22,
-  brakeForce: 32,
-  drag: 2.2,
-  steeringStrength: 1.8,
+  maxSpeed: 44,
+  acceleration: 20,
+  brakeForce: 34,
+  drag: 1.9,
+  baseSteeringStrength: 2.8,
+  steeringResponse: 6,
+  steerAutoCenter: 4.5,
+  lateralGrip: 3.5,
+  highSpeedSteerLimit: 0.45,
   offRoadSlowdown: 0.55
 } as const;
 
