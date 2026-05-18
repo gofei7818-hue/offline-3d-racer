@@ -1,5 +1,6 @@
-*{box-sizing:border-box} html,body,#app{width:100%;height:100%;margin:0}
+*{box-sizing:border-box;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none} html,body,#app{width:100%;height:100%;margin:0}
 body{overflow:hidden;touch-action:none;background:#070b14;color:#f4f7fb;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Noto Sans SC",Arial,sans-serif}
+button,canvas,.hud,.pill{touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 button{font:inherit}.game-shell{position:fixed;inset:0;background:linear-gradient(#6cb4ff 0%, #9ad7ff 35%, #0a192f 100%)}
 .game-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}.hud{position:absolute;top:max(12px,env(safe-area-inset-top));left:max(12px,env(safe-area-inset-left));display:flex;gap:8px;flex-wrap:wrap;pointer-events:none}
 .pill{padding:8px 12px;border:1px solid rgba(255,255,255,.16);border-radius:999px;background:rgba(8,12,22,.62);backdrop-filter:blur(10px)}.screen{position:absolute;inset:0;display:grid;place-items:center;padding:24px;background:rgba(0,0,0,.35)}

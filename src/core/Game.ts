@@ -25,7 +25,7 @@ export class Game {
     this.renderer = new Renderer(this.shell); this.cameraController = new CameraController(this.renderer.camera); this.ui = new UIManager(this.shell); this.touch = new TouchControls(this.ui.root, this.input);
     this.renderer.scene.add(this.car.mesh); this.car.reset(); this.saveData.load(); this.bindSettings();
     this.ui.menu.onStart(() => { void this.audio.initialize(); this.audio.playClick(); this.restartRace(); this.ui.setMenuVisible(false); this.state.transition('racing'); });
-    window.addEventListener('pointerdown', this.tryResumeAudio, { passive: true });
+    window.addEventListener('pointerdown', this.tryResumeAudio, { passive: false });
     window.addEventListener('resize', this.handleResize); window.addEventListener('keydown', this.handleHotkeys);
   }
   async start(): Promise<void> { await this.assets.preload(); this.state.transition('menu'); this.keyboard.attach(); this.touch.attach(); this.loop.start(); }
@@ -55,7 +55,7 @@ export class Game {
   private computeLap(): number { const lap = Math.floor(Math.max(0, (38 - this.car.position.z) / 300)) + 1; return Math.min(3, lap); }
   private restartRace(): void { this.car.reset(); this.input.reset(); this.loop.reset(); }
   private readonly handleResize = (): void => this.renderer.resize();
-  private readonly tryResumeAudio = (): void => { void this.audio.initialize(); };
+  private readonly tryResumeAudio = (event: PointerEvent): void => { event.preventDefault(); void this.audio.initialize(); };
   private readonly handleHotkeys = (event: KeyboardEvent): void => {
     if (event.code === 'KeyP') { this.state.transition(this.state.state === 'paused' ? 'racing' : 'paused'); this.ui.setPaused(this.state.state === 'paused'); this.audio.playClick(); }
     if (event.code === 'KeyR') { this.restartRace(); this.ui.setPaused(false); this.ui.setMenuVisible(false); this.state.transition('racing'); this.audio.playClick(); }

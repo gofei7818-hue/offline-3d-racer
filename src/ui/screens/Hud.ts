@@ -8,6 +8,7 @@ export class Hud {
       <div class="pill" data-hud="speed">速度：0 km/h</div>
       <div class="pill" data-hud="lap">圈数：0/3</div>
       <div class="pill" data-hud="time">时间：00:00.000</div>
+      <div class="pill" data-hud="hint">方向：沿黄色箭头前进</div>
     `;
     host.appendChild(this.element);
   }
