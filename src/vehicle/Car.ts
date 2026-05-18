@@ -17,5 +17,12 @@ export class Car {
     this.mesh.position.copy(this.position); this.mesh.rotation.y = this.heading;
     this.mesh.rotation.z = THREE.MathUtils.lerp(this.mesh.rotation.z, -this.lateralVelocity * 0.03, 0.08);
   }
-  reset(): void { this.position.set(0, 0, 22); this.speed = 0; this.heading = 0; this.lateralVelocity = 0; this.mesh.position.copy(this.position); this.mesh.rotation.set(0,0,0); }
+  reset(): void {
+    this.position.set(0, 0, 39);
+    this.speed = 0;
+    this.heading = Math.PI / 2;
+    this.lateralVelocity = 0;
+    this.mesh.position.copy(this.position);
+    this.mesh.rotation.set(0, this.heading, 0);
+  }
 }
